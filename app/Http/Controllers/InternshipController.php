@@ -62,4 +62,19 @@ class InternshipController extends Controller
     {
         //
     }
+
+    // Admin: Mengubah status magang
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:approved,rejected'
+        ]);
+
+        $internship = Internship::findOrFail($id);
+        $internship->update([
+            'status' => $request->status
+        ]);
+
+        return redirect()->back()->with('success', 'Status pendaftaran magang berhasil diperbarui!');
+    }
 }
